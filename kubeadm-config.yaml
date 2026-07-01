@@ -1,0 +1,25 @@
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+
+kubernetesVersion: v1.30.0
+
+controlPlaneEndpoint: "192.168.122.22:6443"
+
+networking:
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.96.0.0/12"
+
+apiServer:
+  extraArgs:
+    advertise-address: "192.168.122.22"
+
+---
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+
+nodeRegistration:
+  name: k8s-master-01
+  criSocket: "unix:///run/containerd/containerd.sock"
+  kubeletExtraArgs:
+    cgroup-driver: systemd
+
